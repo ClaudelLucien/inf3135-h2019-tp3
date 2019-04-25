@@ -1,7 +1,7 @@
 #!/bin/bash
 # evaluer.sh
-wget -q https://github.com/guyfrancoeur/INF3135_H2019_TP2/raw/master/inf3135-h2019-tp2.correction -O inf3135-h2019-tp2.correction
-if [ ! -f inf3135-h2019-tp2.correction ]
+wget -q https://github.com/guyfrancoeur/INF3135_H2019_TP3/raw/master/inf3135-h2019-tp3.correction -O inf3135-h2019-tp3.correction
+if [ ! -f inf3135-h2019-tp3.correction ]
 then
   exit 1
 
@@ -14,6 +14,7 @@ compteur=0
 while read line
 do
 commande=${line:29}
+
 eval $commande  &>/dev/null
 retour=$?
 
@@ -21,7 +22,7 @@ retourprof=${line:5:1}
 
 
 
-if [ "$retour" = "$retourprof" ]; then 
+if [ "$retour" = "$retourprof" ]; then
 echo -e "$compteur:reussi 1 point"
 note=$((note+1))
 else echo -e "$compteur:echec"
@@ -30,6 +31,9 @@ compteur=$((compteur+1))
 
 
 
-done < inf3135-h2019-tp2.correction
+done < inf3135-h2019-tp3.correction
 echo "Note (total) pour CLAL12049707 dans inf3135-h2019-tp2: $note"
 echo "FIN."
+
+
+

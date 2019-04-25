@@ -9,14 +9,23 @@
 
 
 
-long long* LireFichier(int indice, char * argv[]){
+U128_t* LireLigneFichier(int indice, char * argv[]){
         FILE * fichier = NULL;
         fichier = fopen(argv[indice], "r+");
-        static long long tableau[2]={0};
+        static U128_t tableau[2];
+	char borneInf[50];
+        char borneSup[50];
         if (fichier != NULL){
-        fscanf(fichier, "%lld%lld", & tableau[0], & tableau[1]);
+
+        fscanf(fichier, "%s %s",borneInf,borneSup);
+	U128_t a = lireU128(borneInf);
+        U128_t b = lireU128(borneSup);
+	tableau[0] = a;
+        tableau[1] = b;
+
+/*
           if(tableau[1]<tableau[0]){
-          long long a=tableau[1];
+          char* a=tableau[1];
           tableau[1]=tableau[0];
           tableau[0]=a;
           }
@@ -27,75 +36,71 @@ long long* LireFichier(int indice, char * argv[]){
 	else{
 	exit(5);
         }
+*/
         fclose(fichier);
+
+	}
         return tableau;
 }
 
-long long* LireEntree(){
+U128_t* LireEntree(){
 
-        static long long tableauval[2]= {0};
-        scanf("%lld%lld",& tableauval[0], & tableauval[1]);
-        
-
+       char borneInf[50];
+       char borneSup[50];
+       scanf("%s %s",borneInf,borneSup);
+       U128_t a = lireU128(borneInf);
+       U128_t b = lireU128(borneSup);
+       static U128_t tableauval[2];
+	tableauval[0] = a;
+	tableauval[1] = b;
+/*
        	if(tableauval[1]<tableauval[0]){
           
-          long long a=tableauval[1];
+          char* a=tableauval[1];
           tableauval[1]=tableauval[0];
           tableauval[0]=a;
           }
 	else if(tableauval[0]<0 || tableauval[1]<0){
           exit(4);
           }
-          
-	//printf("%lld %lld",tableauval[0],tableauval[1]);
-        return tableauval;
-}
-long long* LireEntree(){
+*/
 
-        static long long tableauval[2]= {0};
-        scanf("%lld%lld",& tableauval[0], & tableauval[1]);
-        
-
-       	if(tableauval[1]<tableauval[0]){
-          
-          long long a=tableauval[1];
-          tableauval[1]=tableauval[0];
-          tableauval[0]=a;
-          }
-	else if(tableauval[0]<0 || tableauval[1]<0){
-          exit(4);
-          }
-          
-	//printf("%lld %lld",tableauval[0],tableauval[1]);
-        return tableauval;
+	return tableauval;
 }
 
 
 
 
-void rechercheFichier(long long tableau[], char argv[]){
+void rechercheFichier(U128_t tableau[], char argv[]){
 
-        long long borneInf = tableau[0];
-        long long borneSup = tableau[1];
-        FILE * sortie = NULL;
+	FILE * sortie = NULL;
         sortie = fopen(argv, "w+");
         if(sortie==NULL){
         exit(6);
         }
-      for(long long i = 2 ; i<=60; i++){
 
-                if (EstPremier(i)==0){
+	U128_t borneInf = tableau[0];
+        U128_t borneSup = tableau[1];
 
-                long long dep=puiss(2,i)-1;
-                if(EstPremier(dep)==0){
-                long long premier=puiss(2,(i-1))*(puiss(2,i)-1);
-                        if(premier<=borneSup && premier>=borneInf){
-                        fprintf(sortie,"%lld\n",premier);
-                        }
+		for(U128_t i = 2 ; i<=60; i++){
 
-                        }
-                }
-        }
+                	if (EstPremier(i)==0){
+
+                	U128_t dep=puiss(2,i)-1;
+                		if(EstPremier(dep)==0)
+				{
+                		U128_t premier=puiss(2,(i-1))*(puiss(2,i)-1);
+
+					if(premier<=borneSup && premier>=borneInf)
+					{
+                        		
+					
+					//afficherFichierU128(premier,sortie);
+					}
+
+                        	}
+                	}
+		}
 
                 fclose(sortie);
 }
@@ -118,7 +123,7 @@ int verifierCP(int argc, char * argv[]){
     }
 return 0;
 }
-int EstPremier(unsigned long nombre){
+int EstPremier(U128_t nombre){
 
         if(nombre ==1){
         return 1;
@@ -126,8 +131,8 @@ int EstPremier(unsigned long nombre){
 	if(nombre==2){
         return 0;
         }
-	unsigned long rac_nombre=sqrt(nombre)+1;
-                for (unsigned long i =2 ; i<=rac_nombre-1;i++){
+	U128_t rac_nombre=sqrt(nombre)+1;
+                for (U128_t i =2 ; i<=rac_nombre-1;i++){
                         if (nombre%i==0){
                         return 1;
                         }
@@ -135,33 +140,105 @@ int EstPremier(unsigned long nombre){
 return 0;
 }
 
-void rechercher(long long tableau[]){
-        long long borneInf = tableau[0];
-        long long borneSup = tableau[1];
+void rechercher(U128_t* tableau){
+        U128_t borneInf = tableau[0];
+        U128_t borneSup = tableau[1];
         //for(long long i = borneInf ; i<=borneSup; i++){
-        for(long long i = 2 ; i<=60; i++){
+        for(U128_t i = 2 ; i<=65; i++){
 
                 if (EstPremier(i)==0){
 
-                long long dep=puiss(2,i)-1;
+                U128_t dep=puiss(2,i)-1;
                 if(EstPremier(dep)==0){
-                long long premier=puiss(2,(i-1))*(puiss(2,i)-1);
+                U128_t premier=puiss(2,(i-1))*(puiss(2,i)-1);
                         if(premier<borneSup && premier>borneInf){
-                        printf("%lld\n",premier);
+                        afficherU128(premier);
                         }
-                
+
                         }
                 }
         }
 }
 
-long long puiss (long long x, unsigned long n){
-   long long y = 1;
-   unsigned long m = 1;
+U128_t puiss (U128_t x, U128_t n){
+   U128_t y = 1;
+   U128_t m = 1;
    while (m <= n) {
       y *= x;
       m++;
    }
    return y;
+}
+
+
+
+
+
+
+
+U128_t lireU128(char *ligne){
+
+	int longueur=strlen(ligne);
+	U128_t modulo=1;
+	U128_t facteur=10;
+	U128_t nbrFinal =0;
+	U128_t ascii =48;
+	for(int j = longueur-1; j>=0; j--)
+	{
+	U128_t chiffre =(U128_t) ligne[j]-ascii; //on convertit le char en int
+	chiffre = chiffre * modulo; //On multiplie le chiffre par 1,10,100,1000... selon sa position dans la chaine
+	nbrFinal = nbrFinal + chiffre; // On l'additionne au nombre final
+	modulo = modulo*facteur;
+
+	}
+	return nbrFinal;
+}
+
+
+void afficherU128(U128_t nombre){
+
+	int string[50];
+	short indiceTab=0;
+	U128_t diviseur=10;
+
+
+	while(nombre!=0)
+	{
+	string[indiceTab]=(nombre%diviseur);
+
+	nombre =nombre/diviseur;
+	indiceTab++;
+	}
+
+
+	for(int i = indiceTab-1; i>=0; i--)
+	{
+	printf("%d",string[i]);
+	}
+	printf("\n");
+}
+
+void afficherFichierU128(U128_t nombre, FILE * fichier){
+
+        int string[50];
+        short indiceTab=0;
+        U128_t diviseur=10;
+
+
+        while(nombre!=0)
+        {
+        string[indiceTab]=(nombre%diviseur);
+
+        nombre =nombre/diviseur;
+        indiceTab++;
+        }
+
+
+        for(int i = indiceTab-1; i>=0; i--)
+        {
+        fprintf(fichier,"%d",string[i]);
+        }
+	fprintf(fichier,"\n");
+
 }
 

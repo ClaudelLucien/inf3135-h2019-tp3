@@ -1,0 +1,22 @@
+uk = fscanf(p,%s);
+
+
+
+//prototype
+U128_t CHARtoU128(char *);
+
+short U128toCHAR(U128_t, char *);
+
+*char s;
+
+fprintf(stdout,"%s",s);
+
+
+// POUR VALIDER UNE LIGNE
+
+
+while(EOF){
+uk=fgets(p,%s,line);
+if(valider(line)==1)  // Faire une fonction pour valider la ligne
+strtok(     )
+}
