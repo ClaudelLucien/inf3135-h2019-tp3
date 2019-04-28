@@ -3,7 +3,7 @@
 #include <string.h>
 #include "outils.h"
 #include <math.h>
-
+#include "structure.h"
 
 //Début des Fonctions
 
@@ -71,7 +71,7 @@ U128_t* LireEntree(){
 
 
 
-void rechercheFichier(U128_t tableau[], char argv[]){
+void rechercheFichier(U128_t tableau[], char argv[], noeud * Arbre){
 
 	FILE * sortie = NULL;
         sortie = fopen(argv, "w+");
@@ -81,27 +81,32 @@ void rechercheFichier(U128_t tableau[], char argv[]){
 
 	U128_t borneInf = tableau[0];
         U128_t borneSup = tableau[1];
+	U128_t premier=0;
 
-		for(U128_t i = 2 ; i<=60; i++){
+	if(borneInf>borneSup)
+	{
+	swap(&borneInf,&borneSup);
+	}
+
+		for(U128_t i = 2 ; i<=65 && premier<borneSup ; i++){
 
                 	if (EstPremier(i)==0){
 
                 	U128_t dep=puiss(2,i)-1;
                 		if(EstPremier(dep)==0)
 				{
-                		U128_t premier=puiss(2,(i-1))*(puiss(2,i)-1);
+                		premier=puiss(2,(i-1))*(puiss(2,i)-1);
 
 					if(premier<=borneSup && premier>=borneInf)
 					{
-                        		
-					
-					//afficherFichierU128(premier,sortie);
+                        		ajouterNoeud(&Arbre,premier);
+
+					afficherFichierU128(premier,sortie);
 					}
 
                         	}
                 	}
 		}
-
                 fclose(sortie);
 }
 
@@ -140,24 +145,29 @@ int EstPremier(U128_t nombre){
 return 0;
 }
 
-void rechercher(U128_t* tableau){
+void rechercher(U128_t* tableau,noeud * Arbre){
         U128_t borneInf = tableau[0];
         U128_t borneSup = tableau[1];
+	U128_t premier = 0;
+	if(borneInf>borneSup)
+        {
+	swap(&borneInf,&borneSup);
+        }
         //for(long long i = borneInf ; i<=borneSup; i++){
-        for(U128_t i = 2 ; i<=65; i++){
+        for(U128_t i = 2 ; i<=65 && premier<borneSup ; i++){
 
                 if (EstPremier(i)==0){
 
                 U128_t dep=puiss(2,i)-1;
-                if(EstPremier(dep)==0){
-                U128_t premier=puiss(2,(i-1))*(puiss(2,i)-1);
-                        if(premier<borneSup && premier>borneInf){
-                        afficherU128(premier);
-                        }
-
-                        }
-                }
+                	if(EstPremier(dep)==0){
+                	premier=puiss(2,(i-1))*(puiss(2,i)-1);
+                       		if(premier<borneSup && premier>borneInf){
+				ajouterNoeud(&Arbre,premier);
+                       		}
+                	}
+		}
         }
+afficherASC(Arbre);
 }
 
 U128_t puiss (U128_t x, U128_t n){
@@ -242,3 +252,12 @@ void afficherFichierU128(U128_t nombre, FILE * fichier){
 
 }
 
+
+void swap(U128_t * min,U128_t * max){
+
+U128_t temp= *max;
+*max = *min;
+*min = temp;
+
+
+}

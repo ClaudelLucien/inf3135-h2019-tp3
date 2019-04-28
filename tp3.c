@@ -12,8 +12,8 @@ int main(int argc, char * argv[]) {
 
     noeud *Arbre = NULL;
 
-    ajouterNoeud(&Arbre, 30);
-    ajouterNoeud(&Arbre, 20);
+ajouterNoeud(&Arbre, 0);
+/*    ajouterNoeud(&Arbre, 20);
     ajouterNoeud(&Arbre, 50);
     ajouterNoeud(&Arbre, 45);
     ajouterNoeud(&Arbre, 25);
@@ -23,14 +23,14 @@ int main(int argc, char * argv[]) {
     ajouterNoeud(&Arbre, 25);
     ajouterNoeud(&Arbre, 10);
     ajouterNoeud(&Arbre, 60);
+*/
+    puts("-------------------------------");
+
+   // afficherASC(Arbre);
 
     puts("-------------------------------");
 
-    afficherASC(Arbre);
-
-    puts("-------------------------------");
-
-    afficherDES(Arbre);
+   // afficherDES(Arbre);
 
     detruireArbre(&Arbre);
 
@@ -52,7 +52,7 @@ int main(int argc, char * argv[]) {
 verifierCP(argc,argv);
 
 U128_t* test=LireEntree();
-rechercher(test);
+rechercher(test,Arbre);
 }
 
 if (argc==5){
@@ -61,10 +61,10 @@ verifierCP(argc,argv);
  for (int j = 0; j < argc; j++) {
      if (strcmp(argv[j], "-i") == 0 ) {
      int indice = j+1;
-     rechercher(LireLigneFichier(indice,argv));
+     rechercher(LireLigneFichier(indice,argv),Arbre);
      }
      else if(strcmp(argv[j], "-o") == 0){
-     rechercheFichier(LireEntree(),argv[j+1]);
+     rechercheFichier(LireEntree(),argv[j+1],Arbre);
      
      }
  }
@@ -77,7 +77,8 @@ verifierCP(argc,argv);
              int indice = j+1;
                 for (int k=0;k<argc;k++){
                    if(strcmp(argv[k],"-o") == 0 && strcmp(argv[k+1],"") != 0) {
-                   rechercheFichier(LireLigneFichier(indice,argv),argv[k+1]);
+                   rechercheFichier(LireLigneFichier(indice,argv),argv[k+1],Arbre);
+		   afficherASC(Arbre);
                    }
                 }
              }
