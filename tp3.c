@@ -12,35 +12,7 @@ int main(int argc, char * argv[]) {
 
     noeud *Arbre = NULL;
 
-ajouterNoeud(&Arbre, 0);
-/*    ajouterNoeud(&Arbre, 20);
-    ajouterNoeud(&Arbre, 50);
-    ajouterNoeud(&Arbre, 45);
-    ajouterNoeud(&Arbre, 25);
-    ajouterNoeud(&Arbre, 80);
-    ajouterNoeud(&Arbre, 40);
-    ajouterNoeud(&Arbre, 70);
-    ajouterNoeud(&Arbre, 25);
-    ajouterNoeud(&Arbre, 10);
-    ajouterNoeud(&Arbre, 60);
-*/
-    puts("-------------------------------");
-
-   // afficherASC(Arbre);
-
-    puts("-------------------------------");
-
-   // afficherDES(Arbre);
-
-    detruireArbre(&Arbre);
-
-    char essai[] =  "1834898797994343477037485";
-    U128_t n =0;
-    n=~n;
-    afficherU128(n);
-    U128_t a=lireU128(essai);
-    afficherU128(a);
-    printf("\n");
+    ajouterNoeud(&Arbre, 0); //On initialise un noeud a l'arbre
 
 
     if (argc==1) {
@@ -52,6 +24,10 @@ ajouterNoeud(&Arbre, 0);
 verifierCP(argc,argv);
 
 U128_t* test=LireEntree();
+	if(test==-1)
+	{
+	
+	}
 rechercher(test,Arbre);
 }
 
@@ -93,7 +69,7 @@ return 3;
 
 
 
-
+detruireArbre(&Arbre);
 
 
 

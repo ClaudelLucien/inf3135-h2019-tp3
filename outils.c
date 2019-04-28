@@ -15,7 +15,8 @@ U128_t* LireLigneFichier(int indice, char * argv[]){
         static U128_t tableau[2];
 	char borneInf[50];
         char borneSup[50];
-        if (fichier != NULL){
+        if (fichier != NULL)
+	{
 
         fscanf(fichier, "%s %s",borneInf,borneSup);
 	U128_t a = lireU128(borneInf);
@@ -23,47 +24,31 @@ U128_t* LireLigneFichier(int indice, char * argv[]){
 	tableau[0] = a;
         tableau[1] = b;
 
-/*
-          if(tableau[1]<tableau[0]){
-          char* a=tableau[1];
-          tableau[1]=tableau[0];
-          tableau[0]=a;
-          }
-          else if(tableau[0]<0 || tableau[1]<0){
-          exit(4);
-          }
+       		if(tableau[0]<0 || tableau[1]<0)
+		{
+          	exit(-1);
+          	}
 	}
-	else{
-	exit(5);
-        }
-*/
         fclose(fichier);
 
-	}
         return tableau;
 }
 
 U128_t* LireEntree(){
 
-       char borneInf[50];
-       char borneSup[50];
-       scanf("%s %s",borneInf,borneSup);
-       U128_t a = lireU128(borneInf);
-       U128_t b = lireU128(borneSup);
-       static U128_t tableauval[2];
+       	char borneInf[50];
+       	char borneSup[50];
+       	scanf("%s %s",borneInf,borneSup);
+       	U128_t a = lireU128(borneInf);
+       	U128_t b = lireU128(borneSup);
+       	static U128_t tableauval[2];
 	tableauval[0] = a;
 	tableauval[1] = b;
-/*
-       	if(tableauval[1]<tableauval[0]){
-          
-          char* a=tableauval[1];
-          tableauval[1]=tableauval[0];
-          tableauval[0]=a;
-          }
-	else if(tableauval[0]<0 || tableauval[1]<0){
-          exit(4);
-          }
-*/
+
+		if(tableauval[0]<0 || tableauval[1]<0)
+                {
+                exit(-1);
+                }
 
 	return tableauval;
 }
@@ -196,6 +181,10 @@ U128_t lireU128(char *ligne){
 	for(int j = longueur-1; j>=0; j--)
 	{
 	U128_t chiffre =(U128_t) ligne[j]-ascii; //on convertit le char en int
+		if(chiffre < 0 || chiffre > 9)
+		{
+		exit(-1);
+		}
 	chiffre = chiffre * modulo; //On multiplie le chiffre par 1,10,100,1000... selon sa position dans la chaine
 	nbrFinal = nbrFinal + chiffre; // On l'additionne au nombre final
 	modulo = modulo*facteur;
@@ -261,3 +250,4 @@ U128_t temp= *max;
 
 
 }
+
