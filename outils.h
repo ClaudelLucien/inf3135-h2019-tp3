@@ -9,7 +9,7 @@ __extension__ typedef unsigned __int128 U128_t;
 
 U128_t* LireLigneFichier(char * borneInf, char * borneSup);
 U128_t* LireEntree();
-void rechercheFichier(U128_t tableau[],char argv[],noeud *arbre);
+void rechercheFichier(U128_t tableau[],char argv[],noeud *arbre,FILE * sortie);
 void rechercher(U128_t* tableau, noeud * Arbre);
 int verifierCP(int argc, char * argv[]);
 int EstPremier(U128_t nombre);

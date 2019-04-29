@@ -14,16 +14,9 @@ U128_t* LireLigneFichier(char * borneInf, char * borneSup){
 
 	U128_t a = lireU128(borneInf);
         U128_t b = lireU128(borneSup);
-	//afficherU128(a);
-	//afficherU128(b);
 	tableau[0] = a;
         tableau[1] = b;
-/*
-       		if(tableau[0]<0 || tableau[1]<0)
-		{
-          	exit(-1);
-          	}*/
-	
+
         return tableau;
 }
 
@@ -38,10 +31,6 @@ U128_t* LireEntree(){
 	tableauval[0] = a;
 	tableauval[1] = b;
 
-		/*if(tableauval[0]<0 || tableauval[1]<0)
-                {
-                exit(-1);
-                }*/
 
 	return tableauval;
 }
@@ -49,10 +38,8 @@ U128_t* LireEntree(){
 
 
 
-void rechercheFichier(U128_t tableau[], char argv[], noeud * Arbre){
+void rechercheFichier(U128_t tableau[], char argv[], noeud * Arbre,FILE * sortie){
 
-	FILE * sortie = NULL;
-        sortie = fopen(argv, "w+");
         if(sortie==NULL){
         exit(6);
         }
@@ -80,17 +67,12 @@ void rechercheFichier(U128_t tableau[], char argv[], noeud * Arbre){
 						if(chercherVal(Arbre,premier)==0)
 						{
                         			ajouterNoeud(&Arbre,premier);
-						//fprintf(sortie,afficherU128(premier));
-						//afficherASC(Arbre,sortie);
-						//afficherFichierU128(premier,sortie);
 						}
 					}
 
                         	}
                 	}
 		}
-		afficherASC(Arbre,sortie);
-                fclose(sortie);
 }
 
 int verifierCP(int argc, char * argv[]){
@@ -105,7 +87,6 @@ int verifierCP(int argc, char * argv[]){
         return 0;
         }
 	else if (strcmp(argv[i], "-c") == 0 && strlen(argv[i + 1]) != 12) {
-        //printf("pas12caract");
          exit(2);
         }
     }
@@ -136,7 +117,6 @@ void rechercher(U128_t* tableau,noeud * Arbre){
         {
 	swap(&borneInf,&borneSup);
         }
-        //for(long long i = borneInf ; i<=borneSup; i++){
         for(U128_t i = 2 ; i<=65 && premier<borneSup ; i++){
 
                 if (EstPremier(i)==0){
@@ -182,10 +162,6 @@ U128_t lireU128(char *ligne){
 	for(int j = longueur-1; j>=0; j--)
 	{
 	U128_t chiffre =(U128_t) ligne[j]-ascii; //on convertit le char en int
-		/*if(chiffre < 0 || chiffre > 9)
-		{
-		exit(-1);
-		}*/
 	chiffre = chiffre * modulo; //On multiplie le chiffre par 1,10,100,1000... selon sa position dans la chaine
 	nbrFinal = nbrFinal + chiffre; // On l'additionne au nombre final
 	modulo = modulo*facteur;
