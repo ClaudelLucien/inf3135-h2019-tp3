@@ -9,28 +9,21 @@
 
 
 
-U128_t* LireLigneFichier(int indice, char * argv[]){
-        FILE * fichier = NULL;
-        fichier = fopen(argv[indice], "r+");
+U128_t* LireLigneFichier(char * borneInf, char * borneSup){
         static U128_t tableau[2];
-	char borneInf[50];
-        char borneSup[50];
-        if (fichier != NULL)
-	{
 
-        fscanf(fichier, "%s %s",borneInf,borneSup);
 	U128_t a = lireU128(borneInf);
         U128_t b = lireU128(borneSup);
+	//afficherU128(a);
+	//afficherU128(b);
 	tableau[0] = a;
         tableau[1] = b;
-
+/*
        		if(tableau[0]<0 || tableau[1]<0)
 		{
           	exit(-1);
-          	}
-	}
-        fclose(fichier);
-
+          	}*/
+	
         return tableau;
 }
 
@@ -45,10 +38,10 @@ U128_t* LireEntree(){
 	tableauval[0] = a;
 	tableauval[1] = b;
 
-		if(tableauval[0]<0 || tableauval[1]<0)
+		/*if(tableauval[0]<0 || tableauval[1]<0)
                 {
                 exit(-1);
-                }
+                }*/
 
 	return tableauval;
 }
@@ -84,14 +77,19 @@ void rechercheFichier(U128_t tableau[], char argv[], noeud * Arbre){
 
 					if(premier<=borneSup && premier>=borneInf)
 					{
-                        		ajouterNoeud(&Arbre,premier);
-
-					afficherFichierU128(premier,sortie);
+						if(chercherVal(Arbre,premier)==0)
+						{
+                        			ajouterNoeud(&Arbre,premier);
+						//fprintf(sortie,afficherU128(premier));
+						//afficherASC(Arbre,sortie);
+						//afficherFichierU128(premier,sortie);
+						}
 					}
 
                         	}
                 	}
 		}
+		afficherASC(Arbre,sortie);
                 fclose(sortie);
 }
 
@@ -146,13 +144,16 @@ void rechercher(U128_t* tableau,noeud * Arbre){
                 U128_t dep=puiss(2,i)-1;
                 	if(EstPremier(dep)==0){
                 	premier=puiss(2,(i-1))*(puiss(2,i)-1);
-                       		if(premier<borneSup && premier>borneInf){
-				ajouterNoeud(&Arbre,premier);
+                       		if(premier<borneSup && premier>borneInf)
+				{
+					if(chercherVal(Arbre,premier)==0)
+                                        {
+                                        ajouterNoeud(&Arbre,premier);
+					}
                        		}
                 	}
 		}
         }
-afficherASC(Arbre);
 }
 
 U128_t puiss (U128_t x, U128_t n){
@@ -181,10 +182,10 @@ U128_t lireU128(char *ligne){
 	for(int j = longueur-1; j>=0; j--)
 	{
 	U128_t chiffre =(U128_t) ligne[j]-ascii; //on convertit le char en int
-		if(chiffre < 0 || chiffre > 9)
+		/*if(chiffre < 0 || chiffre > 9)
 		{
 		exit(-1);
-		}
+		}*/
 	chiffre = chiffre * modulo; //On multiplie le chiffre par 1,10,100,1000... selon sa position dans la chaine
 	nbrFinal = nbrFinal + chiffre; // On l'additionne au nombre final
 	modulo = modulo*facteur;
@@ -193,29 +194,6 @@ U128_t lireU128(char *ligne){
 	return nbrFinal;
 }
 
-
-void afficherU128(U128_t nombre){
-
-	int string[50];
-	short indiceTab=0;
-	U128_t diviseur=10;
-
-
-	while(nombre!=0)
-	{
-	string[indiceTab]=(nombre%diviseur);
-
-	nombre =nombre/diviseur;
-	indiceTab++;
-	}
-
-
-	for(int i = indiceTab-1; i>=0; i--)
-	{
-	printf("%d",string[i]);
-	}
-	printf("\n");
-}
 
 void afficherFichierU128(U128_t nombre, FILE * fichier){
 

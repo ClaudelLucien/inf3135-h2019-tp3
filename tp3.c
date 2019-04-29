@@ -10,9 +10,12 @@ char* tableauval[2];
 
 int main(int argc, char * argv[]) {
 
-    noeud *Arbre = NULL;
-
-    ajouterNoeud(&Arbre, 0); //On initialise un noeud a l'arbre
+    noeud *Arbre=NULL;
+    FILE *entree=NULL;
+    FILE *sortie=stdout;
+    char borneInf[50];
+    char borneSup[50];
+   ajouterNoeud(&Arbre, 0); //On initialise un noeud a l'arbre
 
 
     if (argc==1) {
@@ -24,25 +27,36 @@ int main(int argc, char * argv[]) {
 verifierCP(argc,argv);
 
 U128_t* test=LireEntree();
-	if(test==-1)
+	if(*test==-1)
 	{
-	
+	printf("allo");
 	}
 rechercher(test,Arbre);
+
 }
 
 if (argc==5){
 verifierCP(argc,argv);
-
  for (int j = 0; j < argc; j++) {
      if (strcmp(argv[j], "-i") == 0 ) {
      int indice = j+1;
-     rechercher(LireLigneFichier(indice,argv),Arbre);
+        entree = fopen(argv[indice],"r+");
+
+
+		while(!feof(entree))
+		{
+		fscanf(entree, "%s" "%s",borneInf,borneSup);
+		U128_t* a =LireLigneFichier(borneInf,borneSup);
+		rechercher(a,Arbre);
+     		}
+
+     fclose(entree);
+     afficherASC(Arbre,sortie);
      }
      else if(strcmp(argv[j], "-o") == 0){
      rechercheFichier(LireEntree(),argv[j+1],Arbre);
-     
      }
+
  }
 }
 
@@ -53,12 +67,17 @@ verifierCP(argc,argv);
              int indice = j+1;
                 for (int k=0;k<argc;k++){
                    if(strcmp(argv[k],"-o") == 0 && strcmp(argv[k+1],"") != 0) {
-                   rechercheFichier(LireLigneFichier(indice,argv),argv[k+1],Arbre);
-		   afficherASC(Arbre);
-                   }
+     		   FILE *entree = fopen(argv[indice],"r+");
+			   while(!feof(entree))
+			   {
+			   fscanf(entree, "%s %s",borneInf,borneSup);
+
+                	   rechercheFichier(LireLigneFichier(borneInf,borneSup),argv[k+1],Arbre);
+	                   }
+		   fclose(entree);
+		   }
                 }
              }
-            
 	}
 }
 if(argc%2==0){
@@ -67,11 +86,7 @@ return 3;
 
 
 
-
-
 detruireArbre(&Arbre);
-
-
 
 
 }//Fin du main

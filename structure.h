@@ -1,7 +1,7 @@
 // structure.h    
 // Auteur: Lucien CLAUDEL
 // INF3135 - mars 2019
-#include "outils.h"
+
 __extension__ typedef unsigned __int128 U128_t;
 
 
@@ -23,11 +23,13 @@ typedef struct noeud
 
     int chercherVal(noeud *arbre, U128_t valeur);
 
-    void afficherASC(noeud *arbre);
+    void afficherASC(noeud *arbre,FILE * sortie);
 
-    void afficherDES(noeud *arbre);
+    void afficherDES(noeud *arbre,FILE * sortie);
 
     void detruireArbre(noeud **arbre);
+
+    void afficherU128(U128_t nombre, FILE * sortie);
 
 //#ifdef __cplusplus
 //}

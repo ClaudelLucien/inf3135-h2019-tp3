@@ -65,7 +65,7 @@ int chercherVal(noeud *arbre, U128_t valeur)
 
 
 
-void afficherASC(noeud *arbre)
+void afficherASC(noeud *arbre, FILE * sortie)
 {
 	if(!arbre)
 	{
@@ -74,14 +74,14 @@ void afficherASC(noeud *arbre)
 
 	if(arbre->gauche)
 	{
-	afficherASC(arbre->gauche);
+	afficherASC(arbre->gauche,sortie);
 	}
 
-	afficherU128(arbre->valeur);
+	afficherU128(arbre->valeur,sortie);
 
 	if(arbre->droit)
 	{
-	afficherASC(arbre->droit);
+	afficherASC(arbre->droit,sortie);
 	}
 }
 
@@ -92,7 +92,7 @@ void afficherASC(noeud *arbre)
 
 
 
-void afficherDES(noeud *arbre)
+void afficherDES(noeud *arbre, FILE * sortie)
 {
 	if(!arbre)
 	{
@@ -101,14 +101,14 @@ void afficherDES(noeud *arbre)
 
 	if(arbre->droit)
 	{
-	afficherDES(arbre->droit);
+	afficherDES(arbre->droit,sortie);
 	}
 
-    	afficherU128(arbre->valeur);
+    	afficherU128(arbre->valeur,sortie);
 
     	if(arbre->gauche)
 	{
-	afficherDES(arbre->gauche);
+	afficherDES(arbre->gauche,sortie);
 	}
 }
 
@@ -137,3 +137,30 @@ void detruireArbre(noeud **arbre)
 
 	*arbre = NULL;
 }
+
+
+
+
+void afficherU128(U128_t nombre, FILE * sortie){
+
+        int string[50];
+        short indiceTab=0;
+        U128_t diviseur=10;
+
+
+        while(nombre!=0)
+        {
+	string[indiceTab]=(nombre%diviseur);
+
+        nombre =nombre/diviseur;
+        indiceTab++;
+        }
+
+
+	for(int i = indiceTab-1; i>=0; i--)
+        {
+	fprintf(sortie,"%d",string[i]);
+        }
+	fprintf(sortie,"\n");
+}
+
