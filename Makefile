@@ -23,18 +23,18 @@ test:
 
 	@for file in data/* ; do ./tp3 -c $(CP) -i $$file -o sortie; done ;
 
-
+1:
+	./tp3 -c cccc11111111 -i ./data/data.txt 
 clean:
 
 	
 	@rm -f code.txt
 	@rm -f *.o
-	@rm -f outils.o
 	@rm -f tp2
 	@rm -rf data.zip
 	@rm -f tp3
 	@rm -f res.out 
-	
+	@rm -rf data
 data:
 	@wget -q  https://www.github.com/guyfrancoeur/INF3135_H2019/raw/master/tp1/data.zip
 	unzip data.zip
@@ -46,3 +46,6 @@ resultat:
 	git add resultat.txt
 	git commit
 	git push
+
+valgrind:
+	valgrind ./tp3 -c CLAL12049707

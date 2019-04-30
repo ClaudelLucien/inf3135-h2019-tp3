@@ -124,7 +124,7 @@ void rechercher(U128_t* tableau,noeud * Arbre){
                 U128_t dep=puiss(2,i)-1;
                 	if(EstPremier(dep)==0){
                 	premier=puiss(2,(i-1))*(puiss(2,i)-1);
-                       		if(premier<borneSup && premier>borneInf)
+                       		if(premier<=borneSup && premier>=borneInf)
 				{
 					if(chercherVal(Arbre,premier)==0)
                                         {
