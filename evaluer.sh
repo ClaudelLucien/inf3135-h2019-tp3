@@ -22,7 +22,7 @@ retourprof=${line:5:1}
 
 
 if [ "$retour" = "$retourprof" ]; then 
-echo -e "$compteur:reussi 1 point"
+echo -e "$compteur: reussi 0 pts"
 note=$((note+1))
 else echo -e "$compteur:echec"
 fi

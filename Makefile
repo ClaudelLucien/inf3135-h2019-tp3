@@ -28,6 +28,12 @@ clean:
 
 	
 	@rm -f code.txt
+	@rm -f *.o
+	@rm -f outils.o
+	@rm -f tp2
+	@rm -rf data.zip
+	@rm -f tp3
+	@rm -f res.out 
 	
 data:
 	@wget -q  https://www.github.com/guyfrancoeur/INF3135_H2019/raw/master/tp1/data.zip
